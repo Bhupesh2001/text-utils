@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Navbar from "./components/Navbar";
+import TextForm from "./components/TextForm";
 
-function App() {
+export default function App() {
+  const [theme, setTheme] = useState("light");
+  const darkStyle = {
+    backgroundColor: "#343a40",
+    color: "white",
+    position: "fixed",
+    bottom: 0,
+    right: 0,
+    left: 0,
+    top: 0
+  };
+  const lightStyle = {};
+
+  const changeTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div style={theme === "light" ? lightStyle : darkStyle}>
+      <Navbar
+        theme={theme}
+        onClick={changeTheme}
+        title="Text Utilities"
+        aboutText="About"
+      />
+
+      <div className="container my-3">
+        <button
+          type="button"
+          className={theme === "light" ? "btn btn-primary" : "btn btn-dark"}
+          onClick={changeTheme}
         >
-          Learn React
-        </a>
-      </header>
+          Enable {theme === "dark" ? "Light" : "Dark"} Theme
+        </button>
+      </div>
+      <div className="container my-3">
+        <TextForm heading="Enter you text to analyse" theme={theme} />
+      </div>
     </div>
   );
 }
-
-export default App;
